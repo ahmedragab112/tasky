@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "387999784930",
+    "project_id": "test-d3083",
+    "storage_bucket": "test-d3083.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387999784930:android:01a6764f69cad99e5163bb",
+        "android_client_info": {
+          "package_name": "com.example.foucesflow3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvloP83K7r3WrRiDxdvzXATN4wjpiaLy0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
