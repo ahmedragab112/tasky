@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:foucesflow3/models/chanlenge.dart';
 import 'package:foucesflow3/models/task_model.dart';
 import 'package:foucesflow3/models/user_model.dart';
 import 'package:foucesflow3/models/work_time_model.dart';
@@ -14,6 +15,20 @@ class FirebaseManger {
           fromFirestore: (snapshot, _) => TaskModel.fromjson(snapshot.data()!),
           toFirestore: (value, _) => value.toJson(),
         );
+  }
+
+  static CollectionReference<ChallengeCategory> getChanglengeCollection() {
+    return FirebaseFirestore.instance
+        .collection('challenges')
+        .withConverter<ChallengeCategory>(
+          fromFirestore: (snapshot, _) =>
+              ChallengeCategory.fromJson(snapshot.data()!),
+          toFirestore: (value, _) => value.toJson(),
+        );
+  }
+
+  static Stream<QuerySnapshot<ChallengeCategory>> retriveChallengesData() {
+    return getChanglengeCollection().snapshots();
   }
 
   static Future<void> addTask(TaskModel task) {
@@ -148,24 +163,18 @@ class FirebaseManger {
   static Future<List<String>> getChallengesForCategory(
       String categoryName) async {
     try {
-      // Get a reference to the Firestore collection
       CollectionReference challengesCollection =
           FirebaseFirestore.instance.collection('challenges');
 
-      // Query the Firestore collection for the document with the given category name
       DocumentSnapshot documentSnapshot =
           await challengesCollection.doc(categoryName).get();
 
-      // Check if the document exists
       if (documentSnapshot.exists) {
-        // Get the data from the document
         Map<String, dynamic> data =
             documentSnapshot.data() as Map<String, dynamic>;
 
-        // Extract the list of challenges from the data
         dynamic challengesData = data['challenges'][categoryName];
 
-        // Check if the challengesData is a List<String>
         if (challengesData is List<String>) {
           return challengesData;
         } else {
